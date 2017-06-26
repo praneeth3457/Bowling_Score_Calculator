@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bowling Score Calculator</title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="src/style.css">
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="src/mainController.js"></script>
+</head>
+<body class="container" ng-app="bowling" ng-controller="mainCtrl as main">
+    <h1 class="text-center">Bowling Score Calculator</h1>
+    <hr/>
+    <div class="row">
+        <!--Button Groups for points-->
+        <div ng-if="!main.isDone" class="btn-group btn-group-lg col-xs-7" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" ng-click="main.scoreFun(btn);" ng-repeat="btn in main.scoreBtns"><b>{{btn}}</b></button>
+        </div>
+
+        <!-- Message when the game is done-->
+        <div class="col-xs-7" ng-if="main.isDone">
+            <h3>Your total score : {{main.totalScore}}</h3>
+            <button type="button" class="btn btn-info" ng-click="main.resetScores()">Reset</button>
+        </div>
+
+        <div class="col-xs-5">
+            <table class="table maxTotalScore">
+                <tr>
+                    <th class="text-center">Your Score</th>
+                    <th class="text-center">Max Score you can get</th>
+                    <th class="text-center">Max Score</th>
+                </tr>
+                <tr>
+                    <td class="text-center" rowspan="2">{{main.totalScore}}</td>
+                    <td class="text-center" rowspan="2">{{main.maxScoreGet}}</td>
+                    <td class="text-center" rowspan="2">{{main.maxScore}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Points calculator table -->
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table main-table col-xs-10">
+                <tr>
+                    <td ng-repeat="score in main.scores track by $index">
+                        <table class="table score-table">
+                            <tr ng-if="$index !== 9">
+                            <th class="score-th text-center" colspan="2">{{score.id}}</th>
+                        </tr>
+                            <tr ng-if="$index !== 9">
+                                <th class="score-td text-center">{{score.score1}}</th>
+                                <th class="score text-center">{{score.score2Sym}}</th>
+                                <!--<th ng-if="" class="score text-center">{{score.score2Sym}}</th>-->
+                            </tr>
+                            <tr ng-if="$index !== 9">
+                                <th class="score-td text-center" colspan="2">{{score.total}}</th>
+                            </tr>
+
+
+                            <tr ng-if="$index === 9">
+                                <th class="score-th text-center" colspan="3">{{score.id}}</th>
+                            </tr>
+                            <tr ng-if="$index === 9">
+                                <th class="text-center">{{score.score1Sym}}</th>
+                                <th class="score text-center">{{score.score2Sym}}</th>
+                                <th class="score text-center">{{score.score3Sym}}</th>
+                            </tr>
+                            <tr ng-if="$index === 9">
+                                <th class="score-td text-center" colspan="3">{{score.total}}</th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
